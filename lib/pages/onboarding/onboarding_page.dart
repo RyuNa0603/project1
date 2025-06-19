@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
-
+import 'package:project1/core/colors_app.dart';
+import 'package:project1/pages/onboarding/onboaarding2.dart';
 
 class OnboardingPage extends StatelessWidget {
-  const OnboardingPage({super.key});
+   OnboardingPage({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
             InkWell(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const Onboarding2(),
-                  // ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Onboarding2(),
+                ),
+                );
               },
-                 child: Align(
+              child: Align(
                 alignment: Alignment.bottomLeft,
-                child: const Text(
+                child: Text(
                   "Skip",
                   style: TextStyle(
-                    color: Color(0xFF54408C),
+                    color: ColorsApp.primary500,
                   ),
                 ),
               ),
@@ -68,6 +71,20 @@ class OnboardingPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class OnboardingModel {
+  final String image;
+  final String title;
+  final String body;
+  OnboardingModel({required this.image, required this.title, required this.body});
+  factory OnboardingModel.fromJson(Map<String, dynamic> json) {
+    return OnboardingModel(
+      image: json['createdAt'],
+      title: json['name'],
+      body: json['avatar'],
     );
   }
 }

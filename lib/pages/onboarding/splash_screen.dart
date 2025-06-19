@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Container(
           child: Row(
-            children: [SvgPicture.asset('files/icons/splash.svg')],
+            children: [SvgPicture.asset('assets/icons/splash.svg')],
           ),
         ),
       ),

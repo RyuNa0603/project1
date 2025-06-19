@@ -1,0 +1,444 @@
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:project1/core/colors_app.dart';
+
+// class SignUp extends StatefulWidget {
+//   const SignUp({super.key});
+
+//   @override
+//   State<SignUp> createState() => _SignUpState();
+// }
+
+// class _SignUpState extends State<SignUp> {
+//   bool _isObscure = true;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Padding(
+//         padding: const EdgeInsets.all(24.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Text(
+//               "Sign Up",
+//               style: TextStyle(
+//                   fontWeight: FontWeight.w700,
+//                   fontSize: 24,
+//                   color: ColorsApp.greyscale900),
+//             ),
+//             SizedBox(
+//               height: 8,
+//             ),
+//             Text(
+//               "Create account and choose favorite menu",
+//               style: TextStyle(
+//                   fontWeight: FontWeight.w400,
+//                   fontSize: 16,
+//                   color: ColorsApp.greyscale500),
+//             ),
+//             SizedBox(
+//               height: 24,
+//             ),
+//             Align(
+//               alignment: Alignment.centerLeft,
+//               child: Text(
+//                 "Name",
+//                 style: TextStyle(
+//                   color: ColorsApp.greyscale900,
+//                   fontSize: 14,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 6,
+//             ),
+//             TextField(
+//               decoration: InputDecoration(
+//                 hintText: "Your Name",
+//                 border: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(8.0),
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 24,
+//             ),
+//             Align(
+//               alignment: Alignment.centerLeft,
+//               child: Text(
+//                 "Email",
+//                 style: TextStyle(
+//                   color: ColorsApp.greyscale900,
+//                   fontSize: 14,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 6,
+//             ),
+//             TextField(
+//               decoration: InputDecoration(
+//                 hintText: "Your Email",
+//                 border: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(8.0),
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 16,
+//             ),
+//             const Align(
+//               alignment: Alignment.centerLeft,
+//               child: Text(
+//                 "Password",
+//                 style: TextStyle(
+//                   color: Colors.grey,
+//                   fontSize: 15,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 8,
+//             ),
+//             TextField(
+//               obscureText: _isObscure,
+//               decoration: InputDecoration(
+//                 hintText: "Your password",
+//                 suffixIcon: InkWell(
+//                   onTap: () {
+//                     setState(() {
+//                       _isObscure = !_isObscure;
+//                     });
+//                   },
+//                   child: Icon(
+//                     _isObscure ? Icons.visibility_off : Icons.visibility,
+//                   ),
+//                 ),
+//                 border: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(8.0),
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 16,
+//             ),
+//             InkWell(
+//               child: Text(
+//                 "Forgot Password?",
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.w600,
+//                   fontSize: 14,
+//                   color: ColorsApp.primary500,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 24,
+//             ),
+//             ElevatedButton(
+//               onPressed: () {},
+//               style: ElevatedButton.styleFrom(
+//                 backgroundColor: ColorsApp.primary500,
+//                 minimumSize: Size(327, 48),
+//                 padding:
+//                     const EdgeInsets.symmetric(horizontal: 134.5, vertical: 12),
+//               ),
+//               child: Text(
+//                 "Login",
+//                 style: TextStyle(
+//                   color: ColorsApp.white,
+//                   fontWeight: FontWeight.w700,
+//                   fontSize: 16,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 24,
+//             ),
+//             RichText(
+//               text: TextSpan(
+//                 text: "Have an account?",
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.w500,
+//                   fontSize: 16,
+//                   color: ColorsApp.greyscale500,
+//                 ),
+//                 children: [
+//                   TextSpan(
+//                     text: " Sign In",
+//                     style: TextStyle(
+//                       fontWeight: FontWeight.w500,
+//                       fontSize: 16,
+//                       color: ColorsApp.primary500,
+//                     ),
+//                     recognizer: TapGestureRecognizer()
+//                       ..onTap = () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => const SignUp()),
+//                         );
+//                       },
+//                   ),
+//                 ],
+//               ),
+//             ),
+
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:project1/core/colors_app.dart';
+import 'package:project1/pages/SignInSignUp/Sign_in.dart';
+import 'package:project1/pages/SignInSignUp/verification_code.dart';
+
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isObscure = true;
+
+  // Password validatsiyasi uchun holatlar
+  bool _isLengthValid = false;
+  bool _hasNumber = false;
+  bool _hasLetter = false;
+
+  void _validatePassword(String password) {
+    setState(() {
+      _isLengthValid = password.length >= 8;
+      _hasNumber = RegExp(r'[0-9]').hasMatch(password);
+      _hasLetter = RegExp(r'[a-zA-Z]').hasMatch(password);
+    });
+  }
+
+  Widget _buildValidationRow(String text, bool isValid) {
+    return Row(
+      children: [
+        Icon(
+          isValid ? Icons.check_circle : Icons.cancel,
+          color: isValid ? Colors.green : Colors.red,
+          size: 18,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          text,
+          style: TextStyle(
+            color: isValid ? ColorsApp.greyscale900 : Colors.red,
+            fontSize: 13,
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 48),
+              Text(
+                "Sign Up",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                  color: ColorsApp.greyscale900,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Create account and choose favorite menu",
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: ColorsApp.greyscale500,
+                ),
+              ),
+              const SizedBox(height: 24),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Name",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: "Your Name",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Email",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: "Your Email",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Password",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              TextField(
+                controller: _passwordController,
+                onChanged: _validatePassword,
+                obscureText: _isObscure,
+                decoration: InputDecoration(
+                  hintText: "Your password",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  fillColor: ColorsApp.greyscale500,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscure ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _buildValidationRow("Minimum 8 characters", _isLengthValid),
+              _buildValidationRow("Atleast 1 number (1-9)", _hasNumber),
+              _buildValidationRow(
+                  "Atleast lowercase or uppercase letters", _hasLetter),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: (_isLengthValid && _hasNumber && _hasLetter)
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const VerificationEmail()),
+                        );
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorsApp.primary500,
+                  minimumSize: const Size(327, 48),
+                ),
+                child: const Text(
+                  "Register",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Align(
+                alignment: Alignment.center,
+                child: RichText(
+                  text: TextSpan(
+                    text: "Have an account?",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: ColorsApp.greyscale500,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: " Sign In",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: ColorsApp.primary500,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUp()),
+                            );
+                          },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 46,
+              ),
+              Text(
+                "By clicking Register, you agree to our ",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: ColorsApp.greyscale500,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignIn()),
+                  );
+                },
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Terms, Data Policy.",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: ColorsApp.primary500,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
