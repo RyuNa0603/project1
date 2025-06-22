@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project1/pages/home/author_profile_page.dart';
+import 'package:project1/pages/home/authors_page.dart';
 import 'package:project1/pages/home/home.dart';
 import 'package:project1/pages/home/vendors.dart';
 import 'package:project1/pages/onboarding/splash_screen.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.openSans().fontFamily,
       ),
-      home: VendorsPage(),
+      home: HomePage(),
     );
   }
 }

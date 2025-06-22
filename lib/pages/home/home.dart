@@ -1,99 +1,135 @@
-// import 'package:flutter/material.dart';
-// import 'package:project1/core/colors_app.dart';
-
-// class Home extends StatefulWidget {
-//   const Home({super.key});
-
-//   @override
-//   State<Home> createState() => _HomeState();
-// }
-
-// class _HomeState extends State<Home> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         elevation: 0,
-//         title: Row(
-//           children: [
-//             SizedBox(
-//               width: 16,
-//             ),
-//             Icon(
-//               Icons.search,
-//               color: ColorsApp.greyscale900,
-//             ),
-//             SizedBox(
-//               width: 101,
-//             ),
-//             Text(
-//               "Home",
-//               style: TextStyle(
-//                 fontWeight: FontWeight.w700,
-//                 fontSize: 20,
-//                 color: ColorsApp.greyscale900,
-//               ),
-//             ),
-//             SizedBox(
-//               width: 123,
-//             ),
-//             Icon(
-//               Icons.notifications_outlined,
-//               color: ColorsApp.greyscale900,
-//             ),
-//             SizedBox(
-//               width: 8,
-//             ),
-//           ],
-//         ),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(24.0),
-//         child: Column(
-//           children: [
-//             Container(
-//               child: Column(
-//                 children: [
-//                   Row(
-//                     children: [
-//                       Column(
-//                         children: [
-//                           Text(
-//                             "Special Offer",
-//                             style: TextStyle(
-//                               fontWeight: FontWeight.w700,
-//                               fontSize: 20,
-//                               color: ColorsApp.greyscale900,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                       SizedBox(
-//                         width: 84,
-//                       ),
-//                       Image(
-//                         image: AssetImage('assets/images/homeImage.png'),
-//                         width: 99,
-//                         height: 145,
-//                       )
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
+        
 import 'package:flutter/material.dart';
 import 'package:project1/core/colors_app.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  void _showBookDetail(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 60,
+                height: 6,
+                margin: EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                width: 140,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.orange[100],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Text('The Kite Runner',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: ColorsApp.greyscale900)),
+            Text('GoodDay',
+                style: TextStyle(
+                    color: ColorsApp.primary500,
+                    fontWeight: FontWeight.w600)),
+            SizedBox(height: 8),
+            Text(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra dignissim ac ac ac. Nibh et sed ac, eget malesuada.',
+              style: TextStyle(color: ColorsApp.greyscale700),
+            ),
+            SizedBox(height: 12),
+            Text('Review',
+                style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.w600)),
+            Row(
+              children: [
+                Row(
+                  children: List.generate(
+                    4,
+                    (index) => Icon(Icons.star,
+                        size: 20, color: Colors.amber),
+                  )
+                    ..add(Icon(Icons.star,
+                        size: 20, color: ColorsApp.greyscale400)),
+                ),
+                SizedBox(width: 8),
+                Text('(4.0)',
+                    style: TextStyle(color: ColorsApp.greyscale700))
+              ],
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ColorsApp.greyscale300),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.remove, size: 18),
+                      SizedBox(width: 8),
+                      Text('1'),
+                      SizedBox(width: 8),
+                      Icon(Icons.add, size: 18),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+                Text('\$39.99',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: ColorsApp.primary500)),
+              ],
+            ),
+            SizedBox(height: 24),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorsApp.primary500),
+                    child: Text('Continue shopping'),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: ColorsApp.primary500),
+                    ),
+                    child: Text('View cart'),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,21 +229,24 @@ class HomePage extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 5,
-                itemBuilder: (context, index) => Container(
-                  width: 120,
-                  margin: EdgeInsets.only(right: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 140,
-                        color: Colors.orange[100],
-                      ),
-                      SizedBox(height: 8),
-                      Text('Book Title',
-                          style: TextStyle(fontWeight: FontWeight.w700)),
-                      Text('\$14.99'),
-                    ],
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () => _showBookDetail(context),
+                  child: Container(
+                    width: 120,
+                    margin: EdgeInsets.only(right: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 140,
+                          color: Colors.orange[100],
+                        ),
+                        SizedBox(height: 8),
+                        Text('Book Title',
+                            style: TextStyle(fontWeight: FontWeight.w700)),
+                        Text('\$14.99'),
+                      ],
+                    ),
                   ),
                 ),
               ),
