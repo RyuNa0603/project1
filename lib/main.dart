@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:project1/pages/home/author_profile_page.dart';
-import 'package:project1/pages/home/authors_page.dart';
-import 'package:project1/pages/home/home.dart';
-import 'package:project1/pages/home/vendors.dart';
-import 'package:project1/pages/onboarding/splash_screen.dart';
-import 'package:project1/pages/onboarding/onboarding_page.dart';
-import 'package:project1/pages/SignInSignUp/Sign_in.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project1/pages/cart/confirm_order.dart';
+import 'package:project1/pages/cart/location.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +22,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.openSans().fontFamily,
       ),
-      home: HomePage(),
+      home:ConfirmPage()
+      // BlocProvider(
+      //   create: (_) => AuthCubit(),
+      //   child: SuccessVerificationPage(),
+      // ),
     );
   }
 }

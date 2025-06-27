@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/core/colors_app.dart';
+import 'package:project1/pages/auth/success_verification_page.dart';
 
 class VerificationEmail extends StatefulWidget {
   const VerificationEmail({super.key});
@@ -97,6 +98,12 @@ class _VerificationEmailState extends State<VerificationEmail> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Please enter all 4 digits")),
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SuccessVerificationPage(),
+                    ),
                   );
                 }
               },

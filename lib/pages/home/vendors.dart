@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:project1/core/colors_app.dart';
+import 'package:project1/pages/home/home.dart';
 
 class VendorsPage extends StatelessWidget {
   const VendorsPage({super.key});
@@ -15,10 +17,20 @@ class VendorsPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: ColorsApp.white,
-          elevation: 0,
-          leading: BackButton(color: ColorsApp.greyscale900),
-          title:
-              Text('Vendors', style: TextStyle(color: ColorsApp.greyscale900)),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: ColorsApp.greyscale900),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                (route) => false,
+              );
+            },
+          ),
+          title: Text(
+            'Vendors',
+            style: TextStyle(color: ColorsApp.greyscale900),
+          ),
           centerTitle: true,
           actions: [
             Icon(Icons.search, color: ColorsApp.greyscale900),
@@ -27,7 +39,7 @@ class VendorsPage extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
@@ -66,7 +78,7 @@ class VendorsPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: GridView.builder(
                       itemCount: vendors.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         childAspectRatio: 0.75,
                         crossAxisSpacing: 12,
@@ -87,12 +99,13 @@ class VendorsPage extends StatelessWidget {
                                 'Logo',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorsApp.greyscale900),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: ColorsApp.greyscale900,
+                                ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               'Name',
                               style: TextStyle(
@@ -101,13 +114,17 @@ class VendorsPage extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            SizedBox(height: 4),
+                            const SizedBox(height: 4),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(
-                                  5,
-                                  (i) => Icon(Icons.star,
-                                      size: 14, color: Colors.amber)),
+                                5,
+                                (i) => const Icon(
+                                  Icons.star,
+                                  size: 14,
+                                  color: Colors.amber,
+                                ),
+                              ),
                             )
                           ],
                         );

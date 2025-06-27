@@ -1,6 +1,6 @@
-        
 import 'package:flutter/material.dart';
 import 'package:project1/core/colors_app.dart';
+import 'package:project1/pages/home/vendors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -47,8 +47,7 @@ class HomePage extends StatelessWidget {
                     color: ColorsApp.greyscale900)),
             Text('GoodDay',
                 style: TextStyle(
-                    color: ColorsApp.primary500,
-                    fontWeight: FontWeight.w600)),
+                    color: ColorsApp.primary500, fontWeight: FontWeight.w600)),
             SizedBox(height: 8),
             Text(
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra dignissim ac ac ac. Nibh et sed ac, eget malesuada.',
@@ -56,30 +55,25 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 12),
             Text('Review',
-                style: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w600)),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
             Row(
               children: [
                 Row(
                   children: List.generate(
                     4,
-                    (index) => Icon(Icons.star,
-                        size: 20, color: Colors.amber),
-                  )
-                    ..add(Icon(Icons.star,
-                        size: 20, color: ColorsApp.greyscale400)),
+                    (index) => Icon(Icons.star, size: 20, color: Colors.amber),
+                  )..add(Icon(Icons.star,
+                      size: 20, color: ColorsApp.greyscale400)),
                 ),
                 SizedBox(width: 8),
-                Text('(4.0)',
-                    style: TextStyle(color: ColorsApp.greyscale700))
+                Text('(4.0)', style: TextStyle(color: ColorsApp.greyscale700))
               ],
             ),
             SizedBox(height: 16),
             Row(
               children: [
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
                     border: Border.all(color: ColorsApp.greyscale300),
                     borderRadius: BorderRadius.circular(12),
@@ -217,9 +211,20 @@ class HomePage extends StatelessWidget {
                   'Top of Week',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  'See all',
-                  style: TextStyle(color: ColorsApp.primary500),
+                InkWell(
+                  child: Text(
+                    'See all',
+                    style: TextStyle(color: ColorsApp.primary500),
+                  ),
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VendorsPage(),
+                      ),
+                      (route) => false,
+                    );
+                  },
                 )
               ],
             ),
