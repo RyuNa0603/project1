@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/pages/cart/confirm_order.dart';
 import 'package:project1/pages/cart/location.dart';
+import 'package:project1/pages/order_status/order_status.dart';
+import 'package:project1/settings/notification.dart';
+import 'package:project1/settings/settings.dart';
 
 void main() {
   runApp(
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.openSans().fontFamily,
       ),
-      home:ConfirmPage()
+      home:Notifications(),
       // BlocProvider(
       //   create: (_) => AuthCubit(),
       //   child: SuccessVerificationPage(),

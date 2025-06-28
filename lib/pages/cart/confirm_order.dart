@@ -3,6 +3,7 @@ import 'package:project1/bottomsheet/delivery_date_sheet.dart';
 import 'package:project1/bottomsheet/details_sheet.dart';
 import 'package:project1/bottomsheet/payment_sheet.dart';
 import 'package:project1/core/colors_app.dart';
+import 'package:project1/functions/appBarr.dart';
 import 'package:project1/pages/cart/location.dart';
 
 class ConfirmPage extends StatelessWidget {
@@ -10,11 +11,9 @@ class ConfirmPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Confirm Order'),
-        leading: Icon(Icons.arrow_back),
-        actions: [
-          Icon(Icons.notifications_none),
-        ],
+        title: Appbarr(
+          title: "Confirm Order",
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

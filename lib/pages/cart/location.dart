@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/core/colors_app.dart';
+import 'package:project1/functions/appBarr.dart';
 
 class Location extends StatefulWidget {
   const Location({super.key});
@@ -14,11 +15,7 @@ class _LocationState extends State<Location> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Location'),
-        leading: Icon(Icons.arrow_back),
-        actions: [
-          Icon(Icons.notifications_none),
-        ],
+        title: Appbarr(title: "Location"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
