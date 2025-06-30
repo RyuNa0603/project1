@@ -26,14 +26,16 @@ class _SignUpState extends State<SignUp> {
   String error = "";
   bool isLoading = false;
 
-  Future<void> signUp(String email, String password) async {
+  final TextEditingController _nameController = TextEditingController();
+
+  Future<void> signUp(String email, String password, String name) async {
     setState(() {
       data = "";
       error = "";
       isLoading = true;
     });
     try {
-      final response = await AuthRepo().signUp(email, password);
+      final response = await AuthRepo().signUp(email, password, name);
       data = response;
     } catch (e) {
       error = e.toString();

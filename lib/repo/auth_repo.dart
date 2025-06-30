@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class AuthRepo {
   final String baseUrl = 'https://fastapi-books-app.onrender.com/docs';
 
-  Future<String> signUp(String email, String password) async {
+  Future<String> signUp(String email, String name, String password) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/auth/signUp'),
@@ -15,7 +15,7 @@ class AuthRepo {
         },
         body: jsonEncode(
           {
-            "name":"Kim Ryu Na",
+            "name":name,
             "email": email,
             "password": password,
           },
