@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project1/pages/cart/confirm_order.dart';
-import 'package:project1/pages/cart/location.dart';
-import 'package:project1/pages/order_status/order_status.dart';
-import 'package:project1/pages/profile/favourites.dart';
-import 'package:project1/pages/profile/my_account.dart';
-import 'package:project1/pages/profile/profile_page.dart';
-import 'package:project1/settings/notification.dart';
-import 'package:project1/settings/settings.dart';
+import 'package:project1/cubit/auth_cubit.dart';
+import 'package:project1/pages/auth/sign_in.dart';
+import 'package:project1/pages/auth/sign_up.dart';
+import 'package:project1/pages/auth/verification_code.dart';
 
 void main() {
   runApp(
@@ -28,11 +25,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.openSans().fontFamily,
       ),
-      home:Favourites(),
-      // BlocProvider(
-      //   create: (_) => AuthCubit(),
-      //   child: SuccessVerificationPage(),
-      // ),
+      home: BlocProvider(
+        create: (_) => AuthCubit(),
+        child: SignUpPage(),
+      ),
     );
   }
 }

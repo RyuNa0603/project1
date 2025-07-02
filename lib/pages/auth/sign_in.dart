@@ -1,10 +1,10 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/core/colors_app.dart';
 import 'package:project1/cubit/auth_cubit.dart';
 import 'package:project1/cubit/auth_state.dart';
+import 'package:project1/pages/auth/forgot_password.dart';
 import 'package:project1/pages/auth/sign_up.dart';
 import 'package:project1/pages/home/home.dart';
 
@@ -19,6 +19,7 @@ class _SignInCubit extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
   bool _isObscure = true;
 
   @override
@@ -33,7 +34,12 @@ class _SignInCubit extends State<SignIn> {
       context.read<AuthCubit>().signUp(
             _emailController.text.trim(),
             _passwordController.text.trim(),
+            _nameController.text.trim(),
           );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
     }
   }
 
@@ -124,6 +130,29 @@ class _SignInCubit extends State<SignIn> {
                         return null;
                       },
                     ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (_) => AuthCubit(),
+                              child: ForgotPassword(
+                                email: _emailController.text.trim(),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Forgot Password",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: ColorsApp.primary500,
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: state is AuthLoading ? null : () => _submit(),
@@ -163,7 +192,8 @@ class _SignInCubit extends State<SignIn> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const SignUp()),
+                                        builder: (context) =>
+                                            const SignUpPage()),
                                   );
                                 },
                             ),
