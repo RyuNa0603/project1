@@ -1,137 +1,165 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/core/colors_app.dart';
-import 'package:project1/pages/home/home.dart';
+import 'package:project1/cubit/v_c_cubit.dart';
+import 'package:project1/cubit/vendors_cubit.dart';
+import 'package:project1/cubit/vendors_state.dart';
+import 'package:project1/functions/appBarr.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class VendorsPage extends StatelessWidget {
+class VendorsPage extends StatefulWidget {
   const VendorsPage({super.key});
 
   @override
+  State<VendorsPage> createState() => _VendorsPageState();
+}
+
+class _VendorsPageState extends State<VendorsPage> {
+  final controller = PageController();
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<VCCubit>().getVendorCategories();
+    context.read<VendorsCubit>().getVendors();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final vendors = List.generate(9, (index) => '');
-
-    final tabs = ['All', 'Books', 'Poets', 'Special for you', 'Stationery'];
-
-    return DefaultTabController(
-      length: tabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: ColorsApp.white,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: ColorsApp.greyscale900),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-                (route) => false,
-              );
-            },
-          ),
-          title: Text(
-            'Vendors',
-            style: TextStyle(color: ColorsApp.greyscale900),
-          ),
-          centerTitle: true,
-          actions: [
-            Icon(Icons.search, color: ColorsApp.greyscale900),
-          ],
-        ),
-        body: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Appbarr(title: 'Vendors'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Our vendors',
-                    style: TextStyle(
-                      color: ColorsApp.greyscale500,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    'Vendors',
-                    style: TextStyle(
-                      color: ColorsApp.primary500,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
+            Text(
+              'Our vendors',
+              style: TextStyle(
+                color: ColorsApp.greyscale500,
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
               ),
             ),
-            TabBar(
-              isScrollable: true,
-              indicatorColor: ColorsApp.primary500,
-              labelColor: ColorsApp.primary500,
-              unselectedLabelColor: ColorsApp.greyscale500,
-              tabs: tabs.map((tab) => Tab(text: tab)).toList(),
+            Text(
+              'Vendors',
+              style: TextStyle(
+                color: ColorsApp.primary500,
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
             ),
-            Expanded(
-              child: TabBarView(
-                children: tabs.map((tab) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: GridView.builder(
-                      itemCount: vendors.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.75,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                      ),
+            BlocBuilder<VCCubit, VendorsState>(
+              builder: (context, state) {
+                if (state is VendorsLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is VendorsError) {
+                  return Center(child: Text(state.message));
+                } else if (state is VCSuccess) {
+                  return SizedBox(
+                    height: 40,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (_, __) => const SizedBox(width: 20.0),
+                      itemCount: state.categories.length,
                       itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            Container(
-                              height: 97,
-                              width: 97,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: ColorsApp.greyscale300,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                        final category = state.categories[index];
+                        return StatefulBuilder(
+                          builder: (context, builderSetState) {
+                            return InkWell(
+                              onTap: () {
+                                builderSetState(() {
+                                  selectedIndex = index;
+                                });
+                                context.read<VendorsCubit>().getVendors(
+                                      category: category.id.toString(),
+                                    );
+                              },
                               child: Text(
-                                'Logo',
-                                textAlign: TextAlign.center,
+                                category.name,
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
                                   color: ColorsApp.greyscale900,
+                                  fontWeight: selectedIndex == index
+                                      ? FontWeight.bold
+                                      : FontWeight.w400,
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Name',
-                              style: TextStyle(
-                                color: ColorsApp.greyscale900,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: List.generate(
-                                5,
-                                (i) => const Icon(
-                                  Icons.star,
-                                  size: 14,
-                                  color: Colors.amber,
-                                ),
-                              ),
-                            )
-                          ],
+                            );
+                          },
                         );
                       },
                     ),
                   );
-                }).toList(),
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: BlocBuilder<VendorsCubit, VendorsState>(
+                builder: (context, state) {
+                  if (state is VendorsLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is VendorsError) {
+                    return Center(child: Text(state.message));
+                  } else if (state is VendorsSuccess) {
+                    if (state.vendors.isEmpty) {
+                      return const Center(
+                        child: Text('?'),
+                      );
+                    } else {
+                      return GridView.builder(
+                        padding: EdgeInsets.zero,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                        ),
+                        itemCount: state.vendors.length,
+                        itemBuilder: (context, index) {
+                          final vendor = state.vendors[index];
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  color: ColorsApp.primary100,
+                                ),
+                              ),
+                              Text(vendor.name),
+                              Row(
+                                children: List.generate(
+                                  5,
+                                  (i) => Icon(
+                                    Icons.star,
+                                    size: 20.0,
+                                    color: i < vendor.rating
+                                        ? ColorsApp.yellow
+                                        : ColorsApp.greyscale900,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ),
           ],

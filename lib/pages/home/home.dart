@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:project1/core/colors_app.dart';
 import 'package:project1/pages/home/vendors.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   void _showBookDetail(BuildContext context) {
     showModalBottomSheet(
       context: context,
