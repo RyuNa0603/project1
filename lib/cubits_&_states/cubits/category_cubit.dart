@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project1/cubit/category_state.dart';
+import 'package:project1/cubits_&_states/state/category_state.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/repo/category_repo.dart';
 

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/core/colors_app.dart';
-import 'package:project1/cubit/auth_cubit.dart';
-import 'package:project1/cubit/auth_state.dart';
+import 'package:project1/cubits_&_states/cubits/auth_cubit.dart';
+import 'package:project1/cubits_&_states/state/auth_state.dart';
 import 'package:project1/pages/auth/sign_in.dart';
 import 'package:pinput/pinput.dart';
 

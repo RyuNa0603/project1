@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/core/colors_app.dart';
-import 'package:project1/cubit/password_visbility_cubit.dart';
+import 'package:project1/cubits_&_states/cubits/password_visbility_cubit.dart';
 
 class MyAccount extends StatelessWidget {
   MyAccount({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project1/cubit/vendors_state.dart';
+import 'package:project1/cubits_&_states/state/vendors_state.dart';
 import 'package:project1/repo/vendors_repo.dart';
 
 class VendorsCubit extends Cubit<VendorsState> {

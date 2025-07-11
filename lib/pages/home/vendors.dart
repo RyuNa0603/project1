@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/core/colors_app.dart';
-import 'package:project1/cubit/v_c_cubit.dart';
-import 'package:project1/cubit/vendors_cubit.dart';
-import 'package:project1/cubit/vendors_state.dart';
+import 'package:project1/cubits_&_states/cubits/v_c_cubit.dart';
+import 'package:project1/cubits_&_states/cubits/vendors_cubit.dart';
+import 'package:project1/cubits_&_states/state/vendors_state.dart';
 import 'package:project1/functions/appBarr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
